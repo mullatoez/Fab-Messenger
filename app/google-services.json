@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "335686030517",
+    "project_id": "fab-messenger-kt",
+    "storage_bucket": "fab-messenger-kt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335686030517:android:088c3080e6be3339005afc",
+        "android_client_info": {
+          "package_name": "com.mullatoez.fabmessengerkt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335686030517-bh28vael78j6er3m0c76ju20lcrv7idt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAGsYCiqBoAYTvm5587hrHkJqjBXyzJL4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335686030517-bh28vael78j6er3m0c76ju20lcrv7idt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
