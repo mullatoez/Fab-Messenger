@@ -1,5 +1,6 @@
 package com.mullatoez.fabmessengerkt
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.mullatoez.fabmessengerkt.databinding.ActivityNewMessageBinding
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -57,6 +59,12 @@ class NewMessageActivity : AppCompatActivity() {
 
                 binding.recyclerviewNewMessage.adapter = adapter
 
+                adapter.setOnItemClickListener { item, view ->
+                    val intent = Intent(view.context, ChatLogActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -72,10 +80,12 @@ class UserItem(val user: User) : Item<ViewHolder>() {
         // will be called on our list for each user object later on...
         viewHolder.itemView.userName_textView.text = user.userName
 
+        Picasso.get().load(user.profileImageUrl).into(viewHolder.itemView.user_imageview)
+
+
     }
 
     override fun getLayout(): Int {
-
         return R.layout.user_row_new_registration
     }
 
