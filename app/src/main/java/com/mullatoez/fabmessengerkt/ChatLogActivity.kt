@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.mullatoez.fabmessengerkt.databinding.ActivityChatLogBinding
+import com.mullatoez.fabmessengerkt.models.ChatMessage
 import com.mullatoez.fabmessengerkt.models.User
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
@@ -19,10 +20,14 @@ class ChatLogActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatLogBinding
 
+    val adapter = GroupAdapter<ViewHolder>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatLogBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.recyclerViewChatLog.adapter = adapter
 
         //val username = intent.getStringExtra(NewMessageActivity.USER_KEY)
         val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
@@ -42,6 +47,15 @@ class ChatLogActivity : AppCompatActivity() {
         reference.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
 
+                val chatMessage = snapshot.getValue(ChatMessage::class.java)
+
+                if (chatMessage != null) {
+                    if (chatMessage.fromid == FirebaseAuth.getInstance().uid) {
+                        adapter.add(ChatFromItem(chatMessage.text))
+                    } else {
+                        adapter.add(ChatToItem(chatMessage.text))
+                    }
+                }
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -62,11 +76,6 @@ class ChatLogActivity : AppCompatActivity() {
         })
     }
 
-    class ChatMessage(
-        val id: String, val text: String, val fromid: String, val toid: String,
-        val timestamp: Long
-    )
-
     private fun performSendMessage() {
 
         val message = binding.editTextEnterMessage.text.toString()
@@ -85,23 +94,23 @@ class ChatLogActivity : AppCompatActivity() {
             }
     }
 
-    private fun setUpDummyData() {
+    /*private fun setUpDummyData() {
         val adapter = GroupAdapter<ViewHolder>()
         binding.recyclerViewChatLog.adapter = adapter
 
-        adapter.add(ChatFromItem())
+        adapter.add(ChatFromItem(chatMessage.text))
         adapter.add(ChatToItem())
-        adapter.add(ChatFromItem())
+        adapter.add(ChatFromItem(chatMessage.text))
         adapter.add(ChatToItem())
-        adapter.add(ChatFromItem())
+        adapter.add(ChatFromItem(chatMessage.text))
         adapter.add(ChatToItem())
-        adapter.add(ChatFromItem())
+        adapter.add(ChatFromItem(chatMessage.text))
         adapter.add(ChatToItem())
-    }
+    }*/
 
 }
 
-class ChatFromItem : Item<ViewHolder>() {
+class ChatFromItem(text: String) : Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textView_from_row.text = "Text from message"
     }
@@ -111,7 +120,7 @@ class ChatFromItem : Item<ViewHolder>() {
     }
 }
 
-class ChatToItem : Item<ViewHolder>() {
+class ChatToItem(text: String) : Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textView_to_row.text = "This is text from to message that is longer"
     }
