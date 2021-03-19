@@ -116,6 +116,11 @@ class RegisterActivity : AppCompatActivity() {
         dbase.setValue(user)
             .addOnSuccessListener {
                 Toast.makeText(this, "Data saved successful", Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, LatestMessagesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+
             }
     }
 }

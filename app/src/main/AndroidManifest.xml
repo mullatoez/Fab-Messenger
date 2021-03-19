@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FabMessengerKt">
+        <activity android:name=".LatestMessagesActivity"></activity>
         <activity
             android:name=".RegisterActivity"
             android:launchMode="singleTop">
@@ -18,13 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".LoginActivity"
             android:label="Login"
-            android:launchMode="singleTop">
-
-        </activity>
+            android:launchMode="singleTop"></activity>
     </application>
 
 </manifest>
