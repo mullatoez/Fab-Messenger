@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.mullatoez.fabmessengerkt.databinding.ActivityRegisterBinding
+import com.mullatoez.fabmessengerkt.models.User
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -123,8 +124,4 @@ class RegisterActivity : AppCompatActivity() {
 
             }
     }
-}
-
-class User(val uid: String, val userName: String, val profileImageUrl: String) {
-    constructor() : this("", "", "")
 }

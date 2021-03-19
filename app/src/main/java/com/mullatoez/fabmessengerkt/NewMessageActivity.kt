@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.mullatoez.fabmessengerkt.databinding.ActivityNewMessageBinding
+import com.mullatoez.fabmessengerkt.models.User
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
@@ -42,6 +43,10 @@ class NewMessageActivity : AppCompatActivity() {
         fetchUsers()
     }
 
+    companion object {
+        val USER_KEY = "USER_KEY"
+    }
+
     private fun fetchUsers() {
         val ref = FirebaseDatabase.getInstance().getReference("/users")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -60,7 +65,11 @@ class NewMessageActivity : AppCompatActivity() {
                 binding.recyclerviewNewMessage.adapter = adapter
 
                 adapter.setOnItemClickListener { item, view ->
+
+                    val userItem = item as UserItem
                     val intent = Intent(view.context, ChatLogActivity::class.java)
+                   // intent.putExtra(USER_KEY, userItem.user.userName)
+                    intent.putExtra(USER_KEY,userItem.user)
                     startActivity(intent)
                     finish()
                 }
